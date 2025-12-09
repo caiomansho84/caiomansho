@@ -1,6 +1,8 @@
 package com.example.caiomansho.di
 
 import com.example.caiomansho.data.repository.LoginRepository
+import com.example.caiomansho.domain.IsLoggedUseCase
+import com.example.caiomansho.domain.IsLoggedUseCaseImpl
 import com.example.caiomansho.domain.LoginUseCase
 import com.example.caiomansho.domain.LoginUseCaseImpl
 import dagger.Module
@@ -17,4 +19,10 @@ object UseCaseModule {
     fun provideLoginUseCase(loginRepository: LoginRepository): LoginUseCase {
         return LoginUseCaseImpl(loginRepository = loginRepository)
     }
+
+    @Provides
+    fun provideIsLoggedUseCase(loginRepository: LoginRepository): IsLoggedUseCase {
+        return IsLoggedUseCaseImpl(loginRepository = loginRepository)
+    }
+
 }

@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.caiomansho.domain.IsLoggedUseCase
 import com.example.caiomansho.domain.LoginUseCase
 import com.example.caiomansho.ui.uistate.LoginUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +16,8 @@ import kotlin.String
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase
+    private val loginUseCase: LoginUseCase,
+    private val isLoggedUseCase: IsLoggedUseCase
 ) : ViewModel() {
 
     var uiState by mutableStateOf(LoginUiState())
@@ -30,7 +32,6 @@ class LoginViewModel @Inject constructor(
     }
 
     fun login() = viewModelScope.launch {
-
         loginUseCase.invoke(username = uiState.email, password = uiState.password)
             .onStart { uiState = uiState.copy(isLoading = true, errorMsg = null) }
             .collect { success ->
@@ -47,6 +48,13 @@ class LoginViewModel @Inject constructor(
 
             }
 
+    }
+
+    fun isLogged() = viewModelScope.launch {
+        isLoggedUseCase.invoke()
+            .collect { isLogged ->
+                uiState = uiState.copy(isLogged = isLogged)
+            }
     }
 
 }

@@ -35,6 +35,10 @@ fun LoginScreen(
         }
     }
 
+    LaunchedEffect(Unit) {
+        viewModel.isLogged()
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
