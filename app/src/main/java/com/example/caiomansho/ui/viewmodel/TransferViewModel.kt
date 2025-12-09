@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.caiomansho.data.Person
 import com.example.caiomansho.domain.GetBalanceUseCase
 import com.example.caiomansho.domain.GetLoggedUseCase
+import com.example.caiomansho.domain.GetPersonUseCase
 import com.example.caiomansho.domain.GetPersonsUseCase
 import com.example.caiomansho.domain.SearchPersonsUseCase
 import com.example.caiomansho.ui.uistate.HomeUiState
@@ -21,26 +22,16 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val getPersonsUseCase: GetPersonsUseCase,
-    private val searchPersonsUseCase: SearchPersonsUseCase,
-    private val getLoggedUseCase: GetLoggedUseCase,
+class TransferViewModel @Inject constructor(
+    private val getPersonUseCase: GetPersonUseCase,
     private val getBalanceUseCase: GetBalanceUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<HomeUiState<List<Person>>>(HomeUiState.Loading)
-    val uiState: StateFlow<HomeUiState<List<Person>>> = _uiState
+    private val _uiState = MutableStateFlow<HomeUiState<Person>>(HomeUiState.Loading)
+    val uiState: StateFlow<HomeUiState<Person>> = _uiState
     var userUiState by mutableStateOf(UserUiState())
         private set
 
-    var query by mutableStateOf("")
-
-    fun loadUsername() = viewModelScope.launch {
-        getLoggedUseCase.invoke()
-            .collect { username ->
-                userUiState = userUiState.copy(username = username)
-            }
-    }
 
     fun loadBalance() = viewModelScope.launch {
         getBalanceUseCase.invoke()
@@ -49,19 +40,12 @@ class HomeViewModel @Inject constructor(
             }
     }
 
-    fun loadPersons() = viewModelScope.launch {
-        getPersonsUseCase.invoke()
-            .onStart { _uiState.value = HomeUiState.Loading }
-            .collect { persons ->
-                _uiState.value = HomeUiState.Success(persons)
+    fun loadPersonById(personId: String) = viewModelScope.launch {
+        getPersonUseCase.invoke(personId)
+            .collect { person ->
+                _uiState.value = HomeUiState.Success(person)
             }
     }
 
-    fun searchPersons() = viewModelScope.launch {
-        searchPersonsUseCase.invoke(query)
-            .collect { books ->
-                _uiState.value = HomeUiState.Success(books)
-            }
-    }
 
 }

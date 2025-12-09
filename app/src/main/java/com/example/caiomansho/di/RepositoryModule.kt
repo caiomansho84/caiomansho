@@ -1,9 +1,11 @@
 package com.example.caiomansho.di
 
-import com.example.caiomansho.data.datasource.LoginDataSource
+import com.example.caiomansho.data.datasource.UserDataSource
 import com.example.caiomansho.data.datasource.PersonDataSource
-import com.example.caiomansho.data.repository.LoginRepository
+import com.example.caiomansho.data.datasource.WalletDataSource
+import com.example.caiomansho.data.repository.UserRepository
 import com.example.caiomansho.data.repository.PersonRepository
+import com.example.caiomansho.data.repository.WalletRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,13 +17,18 @@ interface RepositoryModule {
 
     @Binds
     fun bindLoginRepository(
-        implementation: LoginDataSource
-    ): LoginRepository
+        implementation: UserDataSource
+    ): UserRepository
 
     @Binds
     fun bindPersonRepository(
         implementation: PersonDataSource
     ): PersonRepository
+
+    @Binds
+    fun bindWalletRepository(
+        implementation: WalletDataSource
+    ): WalletRepository
 
 
 }

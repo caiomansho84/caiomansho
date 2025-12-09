@@ -29,7 +29,7 @@ fun MainNavHost(
     navController: NavHostController = rememberNavController()) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    val shouldShowBackArrow = currentDestination?.route == "transfer"
+    val shouldShowBackArrow = currentDestination?.route == "transfer/{personId}"
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -65,7 +65,7 @@ fun MainNavHost(
                     arguments = listOf(navArgument("personId") { type = NavType.StringType })
                 ) { backStackEntry ->
                     val personId = backStackEntry.arguments?.getString("personId")
-//                    TransferScreen(personId = personId)
+                    TransferScreen(personId = personId!!)
                 }
             }
         }

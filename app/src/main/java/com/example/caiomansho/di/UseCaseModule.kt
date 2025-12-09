@@ -1,7 +1,14 @@
 package com.example.caiomansho.di
 
-import com.example.caiomansho.data.repository.LoginRepository
+import com.example.caiomansho.data.repository.UserRepository
 import com.example.caiomansho.data.repository.PersonRepository
+import com.example.caiomansho.data.repository.WalletRepository
+import com.example.caiomansho.domain.GetBalanceUseCase
+import com.example.caiomansho.domain.GetBalanceUseCaseImpl
+import com.example.caiomansho.domain.GetLoggedUseCase
+import com.example.caiomansho.domain.GetLoggedUseCaseImpl
+import com.example.caiomansho.domain.GetPersonUseCase
+import com.example.caiomansho.domain.GetPersonUseCaseImpl
 import com.example.caiomansho.domain.GetPersonsUseCase
 import com.example.caiomansho.domain.GetPersonsUseCaseImpl
 import com.example.caiomansho.domain.IsLoggedUseCase
@@ -21,23 +28,37 @@ import dagger.hilt.android.components.ViewModelComponent
 object UseCaseModule {
 
     @Provides
-    fun provideLoginUseCase(loginRepository: LoginRepository): LoginUseCase {
+    fun provideLoginUseCase(loginRepository: UserRepository): LoginUseCase {
         return LoginUseCaseImpl(loginRepository = loginRepository)
     }
 
     @Provides
-    fun provideIsLoggedUseCase(loginRepository: LoginRepository): IsLoggedUseCase {
+    fun provideIsLoggedUseCase(loginRepository: UserRepository): IsLoggedUseCase {
         return IsLoggedUseCaseImpl(loginRepository = loginRepository)
     }
 
     @Provides
-    fun provideGetPersons(personRepository: PersonRepository): GetPersonsUseCase {
+    fun provideGetPersonsUseCase(personRepository: PersonRepository): GetPersonsUseCase {
         return GetPersonsUseCaseImpl(personRepository = personRepository)
     }
 
     @Provides
-    fun provideSearchPersons(personRepository: PersonRepository): SearchPersonsUseCase {
+    fun provideGetPersonUseCase(personRepository: PersonRepository): GetPersonUseCase {
+        return GetPersonUseCaseImpl(personRepository = personRepository)
+    }
+
+    @Provides
+    fun provideSearchPersonsUseCase(personRepository: PersonRepository): SearchPersonsUseCase {
         return SearchPersonsUseCaseImpl(personRepository = personRepository)
+    }
+    @Provides
+    fun provideGetLoggedUseCase(userRepository: UserRepository): GetLoggedUseCase {
+        return GetLoggedUseCaseImpl(userRepository = userRepository)
+    }
+
+    @Provides
+    fun provideGetBalanceUseCase(walletRepository: WalletRepository): GetBalanceUseCase {
+        return GetBalanceUseCaseImpl(walletRepository = walletRepository)
     }
 
 }

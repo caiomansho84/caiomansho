@@ -24,6 +24,7 @@ class PersonDataSource @Inject constructor(
     }
 
     override suspend fun getPersonById(id: String): Person {
+        delay(1500)
         return persons.first { it.id == id }
     }
 

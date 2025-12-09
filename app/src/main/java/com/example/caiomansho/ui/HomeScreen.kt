@@ -36,10 +36,13 @@ fun HomeScreen(
 ) {
 
     val uiState by homeViewModel.uiState.collectAsState()
+    val userUiState = homeViewModel.userUiState
+
 
     LaunchedEffect(Unit) {
         homeViewModel.loadPersons()
         homeViewModel.loadUsername()
+        homeViewModel.loadBalance()
     }
 
     Box(
@@ -54,7 +57,8 @@ fun HomeScreen(
                         .fillMaxSize()
                         .padding(16.dp)
                 ) {
-                    Text(text = "Olá, Caio!")
+                    Text(text = "Olá, ${userUiState.username}!")
+                    Text(text = "Saldo: ${userUiState.balance}")
                     PersonLazyColumn(
                         persons = (uiState as HomeUiState.Success).data,
                         homeViewModel = homeViewModel,
@@ -80,6 +84,7 @@ fun PersonLazyColumn(
             .fillMaxSize()
             .padding(24.dp)
     ) {
+        Text(text = "Transferir para:", style = MaterialTheme.typography.titleLarge)
         OutlinedTextField(
             value = homeViewModel.query,
             onValueChange = {
