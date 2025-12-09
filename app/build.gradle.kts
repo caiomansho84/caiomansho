@@ -63,6 +63,8 @@ dependencies {
     implementation(libs.coil3.compose)
     implementation(libs.coil3.network.okhttp)
 
+    implementation(libs.androidx.compose.material.iconsExtended)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
