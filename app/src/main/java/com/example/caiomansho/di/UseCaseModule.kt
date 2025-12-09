@@ -17,6 +17,8 @@ import com.example.caiomansho.domain.LoginUseCase
 import com.example.caiomansho.domain.LoginUseCaseImpl
 import com.example.caiomansho.domain.SearchPersonsUseCase
 import com.example.caiomansho.domain.SearchPersonsUseCaseImpl
+import com.example.caiomansho.domain.TransferUseCase
+import com.example.caiomansho.domain.TransferUseCaseImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -59,6 +61,11 @@ object UseCaseModule {
     @Provides
     fun provideGetBalanceUseCase(walletRepository: WalletRepository): GetBalanceUseCase {
         return GetBalanceUseCaseImpl(walletRepository = walletRepository)
+    }
+
+    @Provides
+    fun provideTransferUseCase(walletRepository: WalletRepository): TransferUseCase {
+        return TransferUseCaseImpl(walletRepository = walletRepository)
     }
 
 }
