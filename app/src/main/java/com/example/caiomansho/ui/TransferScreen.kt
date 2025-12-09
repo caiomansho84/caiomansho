@@ -24,6 +24,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.caiomansho.ui.uistate.HomeUiState
 import com.example.caiomansho.ui.viewmodel.TransferViewModel
 import com.example.caiomansho.util.CurrencyMaskTransformation
@@ -34,14 +36,14 @@ import java.util.Locale
 @Composable
 fun TransferScreen(
     personId: String,
-    viewModel: TransferViewModel = hiltViewModel(),
+    navController: NavController,
+    transferViewModel: TransferViewModel = hiltViewModel(),
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-
-    var price by remember { mutableStateOf("R$ 0,00") }
+    val uiState by transferViewModel.uiState.collectAsState()
+    val userUiState = transferViewModel.userUiState
 
     LaunchedEffect(personId) {
-        viewModel.loadPersonById(personId)
+        transferViewModel.loadPersonById(personId)
     }
 
     Box(
@@ -58,11 +60,14 @@ fun TransferScreen(
                 ) {
                     Text(text = "Transferir para ${(uiState as HomeUiState.Success).data.name}")
                     CurrencyTextField(
-                        value = price,
-                        onValueChange = { price = it }
+                        value = transferViewModel.value,
+                        onValueChange = { transferViewModel.value = it }
                     )
                     Button(
-                        onClick = {  },
+                        onClick = {
+                            transferViewModel.transfer()
+                            navController.navigateUp()
+                                  },
                         modifier = Modifier.fillMaxWidth(),
                     ) {
                         Text("Transferir")

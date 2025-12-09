@@ -65,7 +65,10 @@ fun MainNavHost(
                     arguments = listOf(navArgument("personId") { type = NavType.StringType })
                 ) { backStackEntry ->
                     val personId = backStackEntry.arguments?.getString("personId")
-                    TransferScreen(personId = personId!!)
+                    TransferScreen(
+                        navController = navController,
+                        personId = personId!!
+                    )
                 }
             }
         }

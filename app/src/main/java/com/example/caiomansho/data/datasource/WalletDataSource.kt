@@ -2,7 +2,6 @@ package com.example.caiomansho.data.datasource
 
 import android.content.SharedPreferences
 import com.example.caiomansho.data.repository.WalletRepository
-import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,6 +17,7 @@ class WalletDataSource @Inject constructor(
 
     override fun transfer(value: Float) {
         editor.putFloat("balance", getBalance() - value)
+        editor.apply()
     }
 
 }

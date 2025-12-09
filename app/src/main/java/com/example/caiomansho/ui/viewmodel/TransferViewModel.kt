@@ -2,6 +2,7 @@ package com.example.caiomansho.ui.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,20 +12,24 @@ import com.example.caiomansho.domain.GetLoggedUseCase
 import com.example.caiomansho.domain.GetPersonUseCase
 import com.example.caiomansho.domain.GetPersonsUseCase
 import com.example.caiomansho.domain.SearchPersonsUseCase
+import com.example.caiomansho.domain.TransferUseCase
 import com.example.caiomansho.ui.uistate.HomeUiState
 import com.example.caiomansho.ui.uistate.LoginUiState
 import com.example.caiomansho.ui.uistate.UserUiState
+import com.example.caiomansho.util.CurrencyUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import java.util.Currency
 import javax.inject.Inject
 
 @HiltViewModel
 class TransferViewModel @Inject constructor(
     private val getPersonUseCase: GetPersonUseCase,
-    private val getBalanceUseCase: GetBalanceUseCase
+    private val getBalanceUseCase: GetBalanceUseCase,
+    private val transferUseCase: TransferUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<HomeUiState<Person>>(HomeUiState.Loading)
@@ -32,11 +37,18 @@ class TransferViewModel @Inject constructor(
     var userUiState by mutableStateOf(UserUiState())
         private set
 
+    var value by mutableStateOf("R$ 0,00")
 
     fun loadBalance() = viewModelScope.launch {
         getBalanceUseCase.invoke()
             .collect { balance ->
                 userUiState = userUiState.copy(balance = balance)
+            }
+    }
+
+    fun transfer() = viewModelScope.launch {
+        transferUseCase.invoke(CurrencyUtil().currencyTextToFloat(value))
+            .collect { balance ->
             }
     }
 
