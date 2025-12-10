@@ -14,6 +14,7 @@ import com.example.caiomansho.util.CurrencyUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,26 +28,22 @@ class TransferViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow<GenericUiState<Person>>(GenericUiState.Loading)
     val uiState: StateFlow<GenericUiState<Person>> = _uiState
-//    var userUiState by mutableStateOf(UserUiState())
-//        private set
-    private val _transferUiState = MutableStateFlow<GenericUiState<Boolean>>(GenericUiState.Success(true))
-    val transferUiState: StateFlow<GenericUiState<Boolean>> = _transferUiState
-
+    private val _transferUiState = MutableStateFlow<GenericUiState<Boolean>?>(
+        value = null
+    )
+    val transferUiState: StateFlow<GenericUiState<Boolean>?> = _transferUiState
 
     var value by mutableStateOf("R$ 0,00")
-
-//    fun loadBalance() = viewModelScope.launch {
-//        getBalanceUseCase.invoke()
-//            .collect { balance ->
-//                userUiState = userUiState.copy(balance = balance)
-//            }
-//    }
 
     fun transfer() = viewModelScope.launch {
         transferUseCase
             .invoke(CurrencyUtil().currencyTextToFloat(value))
             .onStart { _transferUiState.value = GenericUiState.Loading }
+            .catch {
+                _transferUiState.value = GenericUiState.Error(it.message ?: "Erro ao transferir")
+            }
             .collect { balance ->
+                _transferUiState.value = GenericUiState.Success(true)
             }
     }
 

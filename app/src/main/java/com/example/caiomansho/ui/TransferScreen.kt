@@ -2,8 +2,10 @@ package com.example.caiomansho.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
@@ -18,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -42,6 +45,12 @@ fun TransferScreen(
         transferViewModel.loadPersonById(personId)
     }
 
+    if(transferUiState is GenericUiState.Success) {
+        LaunchedEffect(Unit) {
+            navController.navigateUp()
+        }
+    }
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -62,12 +71,11 @@ fun TransferScreen(
                     Button(
                         onClick = {
                             transferViewModel.transfer()
-                            navController.navigateUp()
                                   },
                         modifier = Modifier.fillMaxWidth(),
                         enabled = transferUiState != GenericUiState.Loading
                     ) {
-                        if (transferUiState == GenericUiState.Loading) {
+                        if (transferUiState is GenericUiState.Loading) {
                             CircularProgressIndicator(
                                 modifier = Modifier.size(22.dp),
                                 strokeWidth = 2.dp
@@ -75,6 +83,13 @@ fun TransferScreen(
                         } else {
                             Text("Transferir")
                         }
+                    }
+                    if (transferUiState is GenericUiState.Error) {
+                        Spacer(Modifier.height(12.dp))
+                        Text(
+                            text = (transferUiState as GenericUiState.Error).message,
+                            color = Color.Red
+                        )
                     }
                 }
             is GenericUiState.Error -> {}
