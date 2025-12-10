@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.caiomansho.data.Person
-import com.example.caiomansho.ui.uistate.HomeUiState
+import com.example.caiomansho.ui.uistate.GenericUiState
 import com.example.caiomansho.ui.viewmodel.HomeViewModel
 
 
@@ -50,8 +50,8 @@ fun HomeScreen(
         contentAlignment = Alignment.Center
     ) {
         when(uiState) {
-            is HomeUiState.Loading -> LoadingScreen()
-            is HomeUiState.Success ->
+            is GenericUiState.Loading -> LoadingScreen()
+            is GenericUiState.Success ->
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -60,12 +60,12 @@ fun HomeScreen(
                     Text(text = "Olá, ${userUiState.username}!")
                     Text(text = "Saldo: ${userUiState.balance}")
                     PersonLazyColumn(
-                        persons = (uiState as HomeUiState.Success).data,
+                        persons = (uiState as GenericUiState.Success).data,
                         homeViewModel = homeViewModel,
                         navController = navController
                     )
                 }
-            is HomeUiState.Error -> {}
+            is GenericUiState.Error -> {}
             else -> {}
         }
     }

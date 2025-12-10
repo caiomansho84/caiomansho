@@ -1,6 +1,5 @@
 package com.example.caiomansho.ui
 
-import android.R.attr.value
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,17 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.caiomansho.ui.uistate.HomeUiState
+import com.example.caiomansho.ui.uistate.GenericUiState
 import com.example.caiomansho.ui.viewmodel.TransferViewModel
 import com.example.caiomansho.util.CurrencyMaskTransformation
 import java.text.NumberFormat
@@ -40,7 +36,7 @@ fun TransferScreen(
     transferViewModel: TransferViewModel = hiltViewModel(),
 ) {
     val uiState by transferViewModel.uiState.collectAsState()
-    val userUiState = transferViewModel.userUiState
+    val transferUiState by transferViewModel.transferUiState.collectAsState()
 
     LaunchedEffect(personId) {
         transferViewModel.loadPersonById(personId)
@@ -51,14 +47,14 @@ fun TransferScreen(
         contentAlignment = Alignment.Center
     ) {
         when(uiState) {
-            is HomeUiState.Loading -> LoadingScreen()
-            is HomeUiState.Success ->
+            is GenericUiState.Loading -> LoadingScreen()
+            is GenericUiState.Success ->
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(16.dp)
                 ) {
-                    Text(text = "Transferir para ${(uiState as HomeUiState.Success).data.name}")
+                    Text(text = "Transferir para ${(uiState as GenericUiState.Success).data.name}")
                     CurrencyTextField(
                         value = transferViewModel.value,
                         onValueChange = { transferViewModel.value = it }
@@ -69,11 +65,19 @@ fun TransferScreen(
                             navController.navigateUp()
                                   },
                         modifier = Modifier.fillMaxWidth(),
+                        enabled = transferUiState != GenericUiState.Loading
                     ) {
-                        Text("Transferir")
+                        if (transferUiState == GenericUiState.Loading) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(22.dp),
+                                strokeWidth = 2.dp
+                            )
+                        } else {
+                            Text("Transferir")
+                        }
                     }
                 }
-            is HomeUiState.Error -> {}
+            is GenericUiState.Error -> {}
             else -> {}
         }
     }
