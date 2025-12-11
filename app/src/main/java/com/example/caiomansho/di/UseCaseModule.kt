@@ -66,8 +66,8 @@ object UseCaseModule {
     }
 
     @Provides
-    fun provideTransferUseCase(walletRepository: WalletRepository, @ApplicationContext context: Context): TransferUseCase {
-        return TransferUseCaseImpl(context, walletRepository = walletRepository)
+    fun provideTransferUseCase(walletRepository: WalletRepository): TransferUseCase {
+        return TransferUseCaseImpl(walletRepository = walletRepository)
     }
 
 }

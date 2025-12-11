@@ -9,4 +9,19 @@ import dagger.hilt.android.HiltAndroidApp
 //                                                   //
 ///////////////////////////////////////////////////////
 @HiltAndroidApp
-class AndroidApp : Application()
+class AndroidApp : Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+        instance = this
+    }
+
+    companion object {
+        lateinit var instance: AndroidApp
+            private set
+
+        fun getString(resId: Int): String {
+            return instance.getString(resId)
+        }
+    }
+}

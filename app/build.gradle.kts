@@ -66,6 +66,8 @@ dependencies {
 
     implementation(libs.androidx.compose.material.iconsExtended)
     testImplementation(libs.mockito.kotlin)
+    androidTestImplementation(libs.mockito.kotlin)
+    androidTestImplementation("org.mockito:mockito-android:5.12.0")
     testImplementation(libs.junit)
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
     androidTestImplementation(libs.androidx.junit)
