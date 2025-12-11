@@ -118,9 +118,7 @@ Insira o valor R$ 403,00
 
 A API/Mock retornará automaticamente um erro
 
-O app deve exibir:
-
-Tela de erro amigável
+O app deve exibir: Falha ao transferir
 
 📄 Licença
 
