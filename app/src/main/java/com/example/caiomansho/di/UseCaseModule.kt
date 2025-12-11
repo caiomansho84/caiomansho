@@ -1,5 +1,6 @@
 package com.example.caiomansho.di
 
+import android.content.Context
 import com.example.caiomansho.data.repository.UserRepository
 import com.example.caiomansho.data.repository.PersonRepository
 import com.example.caiomansho.data.repository.WalletRepository
@@ -23,6 +24,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 
 
 @Module
@@ -64,8 +66,8 @@ object UseCaseModule {
     }
 
     @Provides
-    fun provideTransferUseCase(walletRepository: WalletRepository): TransferUseCase {
-        return TransferUseCaseImpl(walletRepository = walletRepository)
+    fun provideTransferUseCase(walletRepository: WalletRepository, @ApplicationContext context: Context): TransferUseCase {
+        return TransferUseCaseImpl(context, walletRepository = walletRepository)
     }
 
 }

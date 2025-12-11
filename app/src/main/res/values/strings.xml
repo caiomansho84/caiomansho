@@ -9,4 +9,6 @@
     <string name="password">Senha</string>
     <string name="sign_in">Entrar</string>
     <string name="transfer">Transferir</string>
+    <string name="no_balance">Saldo insuficiente</string>
+    <string name="failed_transfer">Falha ao transferir</string>
 </resources>
