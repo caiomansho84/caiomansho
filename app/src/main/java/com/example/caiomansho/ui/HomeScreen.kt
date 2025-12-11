@@ -20,9 +20,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.caiomansho.R
 import com.example.caiomansho.data.Person
 import com.example.caiomansho.ui.uistate.GenericUiState
 import com.example.caiomansho.ui.viewmodel.HomeViewModel
@@ -57,8 +59,8 @@ fun HomeScreen(
                         .fillMaxSize()
                         .padding(16.dp)
                 ) {
-                    Text(text = "Olá, ${userUiState.username}!")
-                    Text(text = "Saldo: ${userUiState.balance}")
+                    Text(text = String.format(stringResource(R.string.hello), userUiState.username))
+                    Text(text = String.format(stringResource(R.string.balance), userUiState.balance))
                     PersonLazyColumn(
                         persons = (uiState as GenericUiState.Success).data,
                         homeViewModel = homeViewModel,
@@ -84,14 +86,14 @@ fun PersonLazyColumn(
             .fillMaxSize()
             .padding(24.dp)
     ) {
-        Text(text = "Transferir para:", style = MaterialTheme.typography.titleLarge)
+        Text(text = stringResource(R.string.transfer_for), style = MaterialTheme.typography.titleLarge)
         OutlinedTextField(
             value = homeViewModel.query,
             onValueChange = {
                 homeViewModel.query = it
                 homeViewModel.searchPersons()
             },
-            label = { Text("Buscar") },
+            label = { Text(stringResource(R.string.search)) },
             modifier = Modifier.fillMaxWidth()
         )
         LazyColumn(

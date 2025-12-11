@@ -21,10 +21,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.caiomansho.R
 import com.example.caiomansho.ui.uistate.GenericUiState
 import com.example.caiomansho.ui.viewmodel.TransferViewModel
 import com.example.caiomansho.util.CurrencyMaskTransformation
@@ -63,7 +65,7 @@ fun TransferScreen(
                         .fillMaxSize()
                         .padding(16.dp)
                 ) {
-                    Text(text = "Transferir para ${(uiState as GenericUiState.Success).data.name}")
+                    Text(text = String.format(stringResource(R.string.transfer_for_person), (uiState as GenericUiState.Success).data.name))
                     CurrencyTextField(
                         value = transferViewModel.value,
                         onValueChange = { transferViewModel.value = it }
@@ -81,7 +83,7 @@ fun TransferScreen(
                                 strokeWidth = 2.dp
                             )
                         } else {
-                            Text("Transferir")
+                            Text(stringResource(R.string.transfer))
                         }
                     }
                     if (transferUiState is GenericUiState.Error) {

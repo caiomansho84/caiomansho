@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">caiomansho</string>
+    <string name="hello">Olá, %s</string>
+    <string name="balance">Saldo: %s</string>
+    <string name="search">Buscar</string>
+    <string name="transfer_for">Transferir para: </string>
+    <string name="transfer_for_person">Transferir para %s</string>
+    <string name="user">Usuário</string>
+    <string name="password">Senha</string>
+    <string name="sign_in">Entrar</string>
+    <string name="transfer">Transferir</string>
 </resources>

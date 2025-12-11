@@ -22,14 +22,21 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 
+const val LOGIN_ROUTE = "login"
+const val HOME_ROUTE = "home"
+const val TRANSFER_ROUTE = "transfer/{personId}"
+const val PERSON_PARAM = "personId"
+
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun MainNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()) {
+
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    val shouldShowBackArrow = currentDestination?.route == "transfer/{personId}"
+    val shouldShowBackArrow = currentDestination?.route == TRANSFER_ROUTE
+
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -51,20 +58,20 @@ fun MainNavHost(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            NavHost(navController, startDestination = "login") {
-                composable("login") {
+            NavHost(navController, startDestination = LOGIN_ROUTE) {
+                composable(LOGIN_ROUTE) {
                     LoginScreen(
-                        onSuccess = { navController.navigate("home") }
+                        onSuccess = { navController.navigate(HOME_ROUTE) }
                     )
                 }
-                composable("home") {
+                composable(HOME_ROUTE) {
                     HomeScreen(navController = navController)
                 }
                 composable(
-                    route = "transfer/{personId}",
-                    arguments = listOf(navArgument("personId") { type = NavType.StringType })
+                    route = TRANSFER_ROUTE,
+                    arguments = listOf(navArgument(PERSON_PARAM) { type = NavType.StringType })
                 ) { backStackEntry ->
-                    val personId = backStackEntry.arguments?.getString("personId")
+                    val personId = backStackEntry.arguments?.getString(PERSON_PARAM)
                     TransferScreen(
                         navController = navController,
                         personId = personId!!

@@ -17,9 +17,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.example.caiomansho.R
 import com.example.caiomansho.ui.viewmodel.LoginViewModel
 
 @Composable
@@ -53,7 +55,7 @@ fun LoginScreen(
         TextField(
             value = state.email,
             onValueChange = viewModel::onEmailChange,
-            label = { Text("Email") },
+            label = { Text(stringResource(R.string.user)) },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -62,7 +64,7 @@ fun LoginScreen(
         TextField(
             value = state.password,
             onValueChange = viewModel::onPasswordChange,
-            label = { Text("Senha") },
+            label = { Text(stringResource(R.string.password)) },
             modifier = Modifier.fillMaxWidth(),
             visualTransformation = PasswordVisualTransformation()
         )
@@ -80,7 +82,7 @@ fun LoginScreen(
                     strokeWidth = 2.dp
                 )
             } else {
-                Text("Entrar")
+                Text(stringResource(R.string.sign_in))
             }
         }
 
