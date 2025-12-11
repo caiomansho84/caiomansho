@@ -122,35 +122,6 @@ O app deve exibir:
 
 Tela de erro amigável
 
-
-📬 Como simular o push local após autorização
-Método 1 — Usando ADB (recomendado)
-
-Simular push no dispositivo/emulador:
-
-adb shell am broadcast \
-  -a com.example.APP_AUTH_SUCCESS \
-  --es userId 12345 \
-  --es status "AUTHORIZED"
-
-
-Isso dispara o BroadcastReceiver configurado no app.
-
-Método 2 — Via código (Debug Menu)
-
-Se o app tiver uma DevMenu:
-
-Menu → "Simular Push" → "AUTHORIZED"
-
-Método 3 — FakeService interno do app
-
-Se você incluiu um FakePushService, basta chamar:
-
-FakePushService.sendAuthorizedPush()
-
-
-Exemplo:
-
 📄 Licença
 
 MIT / Apache 2.0 / Proprietária (escolher)
