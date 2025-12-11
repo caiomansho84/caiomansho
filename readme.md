@@ -45,30 +45,35 @@ Run → Run Tests ou botão verde ao lado das classes de teste.
 SDK
 Config	Versão
 minSdk	24
-targetSdk	34
-compileSdk	34
+targetSdk	36
+compileSdk	36
 Principais dependências
 dependencies {
-    implementation(platform("androidx.compose:compose-bom:2024.01.00"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
-    implementation("androidx.activity:activity-compose:1.9.0")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+    implementation(libs.hilt.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.coil3.compose)
+    implementation(libs.coil3.network.okhttp)
 
-    // Hilt
-    implementation("com.google.dagger:hilt-android:2.51")
-    kapt("com.google.dagger:hilt-android-compiler:2.51")
+    implementation(libs.androidx.compose.material.iconsExtended)
 
-    // Navigation
-    implementation("androidx.navigation:navigation-compose:2.8.0")
-
-    // Retrofit + OkHttp
-    implementation("com.squareup.retrofit2:retrofit:2.11.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0")
-
-    // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 }
 
 
@@ -88,8 +93,6 @@ Jetpack Compose para UI declarativa
 Hilt para Injeção de Dependência
 
 Repository Pattern para separação entre domínio e dados
-
-Retrofit para comunicação com API
 
 Coroutines/Flows para assíncrono
 
@@ -118,45 +121,6 @@ A API/Mock retornará automaticamente um erro
 O app deve exibir:
 
 Tela de erro amigável
-
-Opção de tentar novamente
-
-Log contendo detalhes da exceção
-
-Exemplo de resposta esperada:
-{
-  "error": "Forbidden",
-  "code": 403,
-  "message": "Operação não autorizada"
-}
-
-📬 Como simular o push local após autorização
-Método 1 — Usando ADB (recomendado)
-
-Simular push no dispositivo/emulador:
-
-adb shell am broadcast \
-  -a com.example.APP_AUTH_SUCCESS \
-  --es userId 12345 \
-  --es status "AUTHORIZED"
-
-
-Isso dispara o BroadcastReceiver configurado no app.
-
-Método 2 — Via código (Debug Menu)
-
-Se o app tiver uma DevMenu:
-
-Menu → "Simular Push" → "AUTHORIZED"
-
-Método 3 — FakeService interno do app
-
-Se você incluiu um FakePushService, basta chamar:
-
-FakePushService.sendAuthorizedPush()
-
-
-Exemplo:
 
 📄 Licença
 
