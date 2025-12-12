@@ -4,11 +4,9 @@ import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.caiomansho.data.Person
-import com.example.caiomansho.domain.GetBalanceUseCase
 import com.example.caiomansho.domain.GetPersonUseCase
 import com.example.caiomansho.domain.exception.NoBalanceException
 import com.example.caiomansho.domain.TransferUseCase

@@ -6,6 +6,9 @@ import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
+const val AUTH_TOKEN = "auth_token"
+const val USERNAME = "username"
+const val BALANCE = "balance"
 @Singleton
 class UserDataSource @Inject constructor(
     private val prefs: SharedPreferences,
@@ -13,9 +16,9 @@ class UserDataSource @Inject constructor(
 ): UserRepository {
     override fun login(username: String, password: String): Boolean {
         if(username == "caio" && password == "1234") {
-            editor.putString("auth_token", UUID.randomUUID().toString())
-            editor.putString("username", username)
-            editor.putFloat("balance", 1000.0f)
+            editor.putString(AUTH_TOKEN, UUID.randomUUID().toString())
+            editor.putString(USERNAME, username)
+            editor.putFloat(BALANCE, 1000.0f)
             editor.apply()
             return true
         } else {
@@ -24,11 +27,11 @@ class UserDataSource @Inject constructor(
     }
 
     override fun isLogged(): Boolean {
-        return prefs.contains("auth_token")
+        return prefs.contains(AUTH_TOKEN)
     }
 
     override fun getUsername(): String {
-        return prefs.getString("username", "")!!
+        return prefs.getString(USERNAME, "")!!
     }
 
 }
