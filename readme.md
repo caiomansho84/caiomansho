@@ -30,6 +30,9 @@ No Android Studio, selecione seu dispositivo físico
 
 Clique em Run ▶️
 
+User: caio
+Senha: 1234
+
 🧪 Como rodar os testes
 1. Testes Unitários (JUnit)
 ./gradlew test
