@@ -58,8 +58,8 @@ class HomeViewModel @Inject constructor(
 
     fun searchPersons() = viewModelScope.launch {
         searchPersonsUseCase.invoke(query)
-            .collect { books ->
-                _uiState.value = GenericUiState.Success(books)
+            .collect { persons ->
+                _uiState.value = GenericUiState.Success(persons)
             }
     }
 

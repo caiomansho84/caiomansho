@@ -1,4 +1,4 @@
-package com.example.caiomansho.domain
+package com.example.caiomansho.domain.exception
 
 class TransferFailedException: Exception("Erro ao transferir") {
 }

@@ -10,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.caiomansho.data.Person
 import com.example.caiomansho.domain.GetBalanceUseCase
 import com.example.caiomansho.domain.GetPersonUseCase
-import com.example.caiomansho.domain.NoBalanceException
+import com.example.caiomansho.domain.exception.NoBalanceException
 import com.example.caiomansho.domain.TransferUseCase
 import com.example.caiomansho.ui.uistate.GenericUiState
 import com.example.caiomansho.util.CurrencyUtil

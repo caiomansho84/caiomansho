@@ -2,6 +2,8 @@ package com.example.caiomansho.domain
 
 
 import com.example.caiomansho.data.repository.WalletRepository
+import com.example.caiomansho.domain.exception.NoBalanceException
+import com.example.caiomansho.domain.exception.TransferFailedException
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -14,8 +16,7 @@ class TransferUseCaseImpl @Inject constructor(
         val balance = walletRepository.getBalance()
         if(value > balance){
             throw NoBalanceException()
-        }
-        if(value == 403.0f) {
+        } else if(value == 403.0f) {
             throw TransferFailedException()
         }
         walletRepository.transfer(value)
