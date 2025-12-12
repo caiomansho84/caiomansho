@@ -125,7 +125,7 @@ fun CurrencyTextField(
             }
         },
         modifier = Modifier.fillMaxWidth(),
-        label = { Text("Valor") },
+        label = { Text(stringResource(R.string.value)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         visualTransformation = CurrencyMaskTransformation()
     )

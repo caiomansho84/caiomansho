@@ -2,6 +2,7 @@
     <string name="app_name">caiomansho</string>
     <string name="hello">Olá, %s</string>
     <string name="balance">Saldo: %s</string>
+    <string name="value">Valor</string>
     <string name="search">Buscar</string>
     <string name="transfer_for">Transferir para: </string>
     <string name="transfer_for_person">Transferir para %s</string>
