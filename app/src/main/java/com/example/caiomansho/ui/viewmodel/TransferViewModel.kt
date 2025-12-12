@@ -21,16 +21,13 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
 import com.example.caiomansho.R
 import dagger.hilt.android.qualifiers.ApplicationContext
 
+const val BASE_VALUE = "R$ 0,00"
 @HiltViewModel
 class TransferViewModel @Inject constructor(
     private val getPersonUseCase: GetPersonUseCase,
-    private val getBalanceUseCase: GetBalanceUseCase,
     private val transferUseCase: TransferUseCase,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
@@ -42,7 +39,7 @@ class TransferViewModel @Inject constructor(
     )
     val transferUiState: StateFlow<GenericUiState<Boolean>?> = _transferUiState
 
-    var value by mutableStateOf("R$ 0,00")
+    var value by mutableStateOf(BASE_VALUE)
 
     fun transfer() = viewModelScope.launch {
         transferUseCase
