@@ -13,10 +13,10 @@ class TransferUseCaseImpl @Inject constructor(
     override operator fun invoke(value: Float): Flow<Boolean> = flow {
         val balance = walletRepository.getBalance()
         if(value > balance){
-            throw Exception("Saldo insuficiente")
+            throw NoBalanceException()
         }
-        if(value in 403.0..<404.0) {
-            throw Exception("Falha ao transferir")
+        if(value == 403.0f) {
+            throw TransferFailedException()
         }
         walletRepository.transfer(value)
         emit(true)
