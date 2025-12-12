@@ -26,7 +26,7 @@ class NotificationUtil {
         val notification = NotificationCompat.Builder(context, "default_channel")
             .setContentTitle("Nova transferência")
             .setContentText("Você enviou ${value}!")
-            .setSmallIcon(R.drawable.ic_launcher_background)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentIntent(pendingIntent)
             .setAutoCancel(false)
             .build()

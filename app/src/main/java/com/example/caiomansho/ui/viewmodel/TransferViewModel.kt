@@ -20,9 +20,9 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.example.caiomansho.R
+import com.example.caiomansho.util.BASE_VALUE
 import dagger.hilt.android.qualifiers.ApplicationContext
 
-const val BASE_VALUE = "R$ 0,00"
 @HiltViewModel
 class TransferViewModel @Inject constructor(
     private val getPersonUseCase: GetPersonUseCase,

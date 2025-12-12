@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.RequiresPermission
 import com.example.caiomansho.data.repository.WalletRepository
+import com.example.caiomansho.util.BALANCE
 import com.example.caiomansho.util.NotificationUtil
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
@@ -19,13 +20,13 @@ class WalletDataSource @Inject constructor(
 ): WalletRepository {
 
     override suspend fun getBalance(): Float {
-        return prefs.getFloat("balance", 0.0f)
+        return prefs.getFloat(BALANCE, 0.0f)
     }
 
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     override suspend fun transfer(value: Float) {
         delay(2000)
-        editor.putFloat("balance", getBalance() - value)
+        editor.putFloat(BALANCE, getBalance() - value)
         editor.apply()
         NotificationUtil().sendNotification(context = context, value = value)
     }
